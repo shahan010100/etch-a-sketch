@@ -3,9 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Responsive Flexbox Grid</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;  /* Full width of the parent */
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        .column {
+            background-color: hsl(0, 9%, 91%);
+            border: 0.25px solid white;
+            box-sizing: border-box;
+            position:relative;
+        }
+        button {
+            position: fixed; /* Keep button fixed on the page */
+            top: 20px; /* Distance from the top */
+            left: 20px; /* Distance from the left */
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 10; /* Ensure button is always on top */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darken button on hover */
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container"></div>
+
+    <script>
+        let grid = 16; // You can change this to any number
+        const container = document.querySelector('.container');
+        let btn=document.createElement('button');
+        btn.textContent="RESET";
+        btn.addEventListener("click", ()=>{
+            let num=prompt("Enter:");
+            num=Number(num);
+            if(!isNaN(num) && num>0 && num<=100)
+        {
+            grid=num;
+            createGrid(grid);
+        }
+        else{
+            alert("Please enter a valid number greater than 0 and less than 100");
+        }
+        });
+        const body=document.querySelector('body');
+        body.appendChild(btn);
+        // Function to create the grid
+        function createGrid(gridSize) {
+            container.innerHTML = ''; // Clear the container before creating a new grid
+            const columnWidth = 100 / gridSize; // Percentage width for each column
+
+         
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                const div = document.createElement('div');
+                div.className = 'column';
+                div.style.width = `${columnWidth}%`; // Set column width dynamically
+                div.style.paddingTop = `${columnWidth}%`; // Maintain square aspect ratio
+                 div.addEventListener("mouseover", () => {
+                    div.style.backgroundColor = "black";}) // Change color on hover
+                
+                container.appendChild(div);
+            }
+        }
+
+        // Initialize grid creation
+        createGrid(grid);
+
+    </script>
 </body>
 </html>
